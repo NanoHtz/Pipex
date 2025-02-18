@@ -1,0 +1,18 @@
+El objetivo de pipex es que un proceso hijo ejecute un comando y su salida se pase a otro proceso usando un pipe.
+
+pipe() -> Crea una relacion unidireccional entre procesos, la salida de uno, es la entrada de otro.
+Es un buffer temporal en la MEMORIA.
+fork() -> Crea un proceso hijo copiando al padre, ejecutan el mismo código, pero devuelven valores diferentes.
+-> En el proceso hijo, fork devuelve 0
+-> En el proceso padre, fork devuelve el PID del hijo.
+-> Si falla devuelve -1.
+
+¡Ambos procesos se ejecutan en paralelo, luego ante varios prints(por ejemplo), la manera en que se imprimen puede verse alterada!
+
+wait() -> Esta funcion permite que un proceso padre espere hasta que su hijo termine con el proceso.
+waitpid() -> Es la version mas flexible de wait(), por que selecciona a un hijo específico del proceso.
+
+Despues de entender estos procesos.
+Tenemos que entender
+execve() ->
+dup2() ->
