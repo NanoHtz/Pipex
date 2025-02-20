@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   ft_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgalvez- <fgalvez-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: fgalvez- <fgalvez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/17 14:18:23 by fgalvez-          #+#    #+#             */
-/*   Updated: 2025/02/17 14:18:23 by fgalvez-         ###   ########.fr       */
+/*   Created: 2024/11/21 21:16:53 by fgalvez-          #+#    #+#             */
+/*   Updated: 2024/12/05 13:54:38 by fgalvez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#include "errors.h"
 
-# include <stdio.h> //Para pruebas, borrar si es necesario
-# include <fcntl.h>
-# include "utils/errors.h"
-
-#endif
+void	ft_warning(const char *str)
+{
+	write(1, "\033[33m", 5);
+	ft_strendl(str);
+	write(1, "\033[0m", 4);
+}

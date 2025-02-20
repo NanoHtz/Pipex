@@ -35,3 +35,22 @@
 */
 
 #include "../Inc/pipex.h"
+
+int	main(int ac, char **av)
+{
+	int	fd;
+	int	fd2;
+
+	(void)av;
+	if (ac == 5)
+	{
+		fd = open(av[1], O_RDONLY);
+		fd2 = open(av[5], O_WRONLY );
+		if ((fd == -1) || (fd2 == - 1))
+			ft_error(OPEN_ERROR);
+
+		printf("Hola caracola\n");
+	}
+	else
+		ft_error(ARGS_ERROR);
+}

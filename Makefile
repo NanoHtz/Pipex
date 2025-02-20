@@ -12,28 +12,24 @@
 
 # ========================= VARIABLES GLOBALES =============================== #
 
-NAME = push_swap
+NAME = pipex
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 DEBUGGER = -g3
 RM = rm -f
 NORMINETTE = norminette
 # ========================= DIRECTORIOS Y ARCHIVOS =========================== #
-DIR_HEADERS = Inc/libft Inc/utils Inc
-DIR_PS     = src/
+DIR_SRC  = src/
+DIR_PIPEX = Inc
 DIR_UTILS  = Inc/utils
-DIR_LIBFT  = Inc/libft
 
-HEADERS = $(wildcard $(DIR_HEADERS)/*.h) \
-
-
-DIRSOURCE   = src/
-SOURCES.h = $(wildcard $(DIR_UTILS)/*.c) \
-			$(wildcard $(DIR_LIBFT)/*.c)
+HEADERS = $(wildcard $(DIR_PIPEX)/*.h) \
+		$(wildcard $(DIR_UTILS)/*.h)
 
 
-SOURCES     = $(wildcard $(DIRSOURCE)*.c)
-SRCS        = $(SOURCES.h) $(SOURCES)
+SOURCES     = $(wildcard $(DIR_SRC)*.c)
+SOURCES_UTILS = $(wildcard $(DIR_UTILS)/*.c)
+SRCS        = $(SOURCES_UTILS) $(SOURCES)
 
 OBJSDIR     = ./obj/
 OBJS        = $(addprefix $(OBJSDIR), $(notdir $(SRCS:.c=.o)))
@@ -59,25 +55,20 @@ $(NAME): $(OBJS)
 	@echo "${CYAN}=================================================================================================================${RESET}"
 	@echo "${MAGENTA}You should use: valgrind --leak-check=full -s./$(NAME) argv[1] argv[2] ....${RESET}"
 # ========================= REGLAS PARA LOS OBJETOS ========================== #
-$(OBJSDIR)%.o: $(DIRSOURCE)%.c
+$(OBJSDIR)%.o: $(DIR_SRC)%.c
 	@mkdir -p $(dir $@)
 	@echo "${CYAN}Compilando objeto: $<${RESET}"
-	$(CC) $(CFLAGS) $(addprefix -I, $(DIR_HEADERS)) -c $< -o $@
+	$(CC) $(CFLAGS) $(addprefix -I, $(DIR_PIPEX) $(DIR_UTILS)) -c $< -o $@
 
-$(OBJSDIR)%.o: $(DIR_PS)/%.c
+$(OBJSDIR)%.o: $(DIR_PIPEX)/%.c
 	@mkdir -p $(dir $@)
 	@echo "${CYAN}Compilando objeto: $<${RESET}"
-	$(CC) $(CFLAGS) $(addprefix -I, $(DIR_HEADERS)) -c $< -o $@
+	$(CC) $(CFLAGS) $(addprefix -I, $(DIR_PIPEX) $(DIR_UTILS)) -c $< -o $@
 
 $(OBJSDIR)%.o: $(DIR_UTILS)/%.c
 	@mkdir -p $(dir $@)
 	@echo "${CYAN}Compilando objeto: $<${RESET}"
-	$(CC) $(CFLAGS) $(addprefix -I, $(DIR_HEADERS)) -c $< -o $@
-
-$(OBJSDIR)%.o: $(DIR_LIBFT)/%.c
-	@mkdir -p $(dir $@)
-	@echo "${CYAN}Compilando objeto: $<${RESET}"
-	$(CC) $(CFLAGS) $(addprefix -I, $(DIR_HEADERS)) -c $< -o $@
+	$(CC) $(CFLAGS) $(addprefix -I, $(DIR_PIPEX) $(DIR_UTILS)) -c $< -o $@
 
 
 # ========================= LIMPIEZA DE ARCHIVOS ============================= #

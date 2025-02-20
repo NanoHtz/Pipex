@@ -1,20 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   ft_value_errors.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fgalvez- <fgalvez-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/17 14:18:23 by fgalvez-          #+#    #+#             */
-/*   Updated: 2025/02/17 14:18:23 by fgalvez-         ###   ########.fr       */
+/*   Created: 2024/12/08 13:31:08 by fgalvez-          #+#    #+#             */
+/*   Updated: 2024/12/08 13:31:08 by fgalvez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#include "errors.h"
 
-# include <stdio.h> //Para pruebas, borrar si es necesario
-# include <fcntl.h>
-# include "utils/errors.h"
+int	ft_min_error(const char *str)
+{
+	write(1, "\033[31m", 5);
+	ft_strendl(str);
+	write(1, "\033[0m", 4);
+	return (INT_MIN);
+}
 
-#endif
+int	ft_max_error(const char *str)
+{
+	write(1, "\033[31m", 5);
+	ft_strendl(str);
+	write(1, "\033[0m", 4);
+	return (INT_MAX);
+}

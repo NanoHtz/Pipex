@@ -1,20 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   ft_strendl.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fgalvez- <fgalvez-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/17 14:18:23 by fgalvez-          #+#    #+#             */
-/*   Updated: 2025/02/17 14:18:23 by fgalvez-         ###   ########.fr       */
+/*   Created: 2024/12/08 13:32:09 by fgalvez-          #+#    #+#             */
+/*   Updated: 2024/12/08 13:32:09 by fgalvez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#include "errors.h"
 
-# include <stdio.h> //Para pruebas, borrar si es necesario
-# include <fcntl.h>
-# include "utils/errors.h"
+void	ft_strendl(const char *str)
+{
+	int	i;
 
-#endif
+	i = 0;
+	while (str[i] != '\0')
+	{
+		write(1, &str[i], 1);
+		i++;
+	}
+	write(1, "\n", 1);
+}
