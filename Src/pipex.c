@@ -49,7 +49,7 @@ int	main(int ac, char **av)
 		if ((fd == -1) || (fd2 == - 1))
 			ft_error(OPEN_ERROR);
 
-		printf("Hola caracola\n");
+		printf("Hola caracola como estas\n");
 	}
 	else
 		ft_error(ARGS_ERROR);
