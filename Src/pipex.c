@@ -35,7 +35,6 @@
 */
 
 #include "../Inc/pipex.h"
-<<<<<<< HEAD
 
 int	main(int ac, char **av)
 {
@@ -55,5 +54,4 @@ int	main(int ac, char **av)
 	else
 		ft_error(ARGS_ERROR);
 }
-=======
->>>>>>> 791456deaa6bff4ce01e5341b180b2c0b1c018e6
+
