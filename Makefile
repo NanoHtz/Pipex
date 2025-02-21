@@ -15,7 +15,6 @@
 <<<<<<< HEAD
 NAME = pipex
 =======
-NAME = push_swap
 >>>>>>> 791456deaa6bff4ce01e5341b180b2c0b1c018e6
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
