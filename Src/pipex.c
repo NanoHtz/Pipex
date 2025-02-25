@@ -10,48 +10,135 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
-*** Debemos replicar el funcionamiento de los pipex en UNIX
-*** El programa funcionara asi: ./pipex archivo1 comando1 comando2 archivo2
-*** Replicando el comportamiento de:
-*** < archivo1 comando1 | comando2 > archivo2
-*** Ejemplo, esto: ./pipex infile "ls -l" "wc -l" outfile
-*** debe replicar el comportamiento de esto: < infile ls -l | wc -l > outfile
-*** Se permite usar: open, close, read, write, malloc, free, perror, strerror
-*** access, dup, dup2, execve, exit, fork, pipe, unlink, wait, waitpid
-*** ft_printf y similares.
-*** Debe entregarse con un makefile con las reglas: NAME, all, clean, fclean, re.
-*** Debe cumplir la norma y no tener fugas de memoria.
-*** El bonus deble poder manejar mas de dos comandos
-*** ./pipex archivo1 comando1 comando2 comando3 ... comandon archivo2
-*** Implementar here_doc
-*** PASOS:
-*** pipe() y fork() son las bases del proyecto, entiendelas bien.
-*** Implementa un simple pipeline (cmd1 | cmd2) con dup2() y execve().
-*** Gestiona errores correctamente (archivos, comandos, argumentos incorrectos).
-*** Añade el manejo de argv para ejecutar los comandos correctamente.
-*** Optimiza la gestión de memoria para evitar leaks.
-*** Prueba con diferentes casos de uso y usa valgrind para verificar memoria.
-*/
-
 #include "../Inc/pipex.h"
+#include <unistd.h>
+#include <stdlib.h>
+#include <sys/wait.h>
+#include <fcntl.h>
+#include <stdio.h>
 
-int	main(int ac, char **av)
+char	*is_executable(char *cmd_path, char **paths)
 {
-	int	fd;
-	int	fd2;
-
-	(void)av;
-	if (ac == 5)
+	if (access(cmd_path, X_OK) == 0)
 	{
-		fd = open(av[1], O_RDONLY);
-		fd2 = open(av[5], O_WRONLY );
-		if ((fd == -1) || (fd2 == - 1))
-			ft_error(OPEN_ERROR);
-
-		printf("Hola caracola como estas\n");
+		ft_free_split(paths);
+		return (cmd_path);
 	}
-	else
-		ft_error(ARGS_ERROR);
+	free(cmd_path);
+	return (NULL);
 }
 
+char	**get_paths(char **envp)
+{
+	char	*path;
+	char	**paths;
+
+	while (*envp && ft_strncmp(*envp, "PATH=", 5) != 0)
+		envp++;
+	if (!*envp)
+		return (NULL);
+	path = *envp + 5;
+	paths = ft_split(path, ':');
+	if (!paths)
+		return (NULL);
+	return (paths);
+}
+
+char	*find_command_path(char *cmd, char **envp)
+{
+	char	**paths;
+	char	*cmd_path;
+	char	*temp;
+	int		i;
+
+	paths = get_paths(envp);
+	i = 0;
+	while (paths[i])
+	{
+		temp = ft_strjoin(paths[i], "/");
+		if (!temp)
+			return (ft_free_split(paths), NULL);
+		cmd_path = ft_strjoin(temp, cmd);
+		free(temp);
+		if (!cmd_path)
+			return (ft_free_split(paths), NULL);
+		if (is_executable(cmd_path, paths))
+			return (cmd_path);
+		i++;
+	}
+	ft_free_split(paths);
+	return (NULL);
+}
+
+int	main(int ac, char **av, char **envp)
+{
+	int		fd[2];
+	int		infile;
+	int		outfile;
+	pid_t	pid;
+	char	*cmd_path;
+	char	**cmd_args;
+
+	if (ac != 5)
+		ft_error(ARGS_ERROR);
+	infile = open(av[1], O_RDONLY);
+	if (infile == -1)
+		ft_error(OPEN_ERROR);
+	outfile = open(av[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (outfile == -1)
+	{
+		close(infile);
+		ft_error(OPEN_ERROR);
+	}
+	if (pipe(fd) == -1)
+		ft_error(PIPE_ERROR);
+	pid = fork();
+	if (pid == -1)
+		ft_error(FORK_ERROR);
+	if (pid == 0)
+	{
+		close(fd[0]);
+		dup2(infile, STDIN_FILENO);
+		dup2(fd[1], STDOUT_FILENO);
+		close(fd[1]);
+		close(infile);
+		close(outfile);
+		cmd_path = find_command_path(av[2], envp);
+		if (!cmd_path)
+			ft_error(COMMAND_NOT_FOUND);
+		cmd_args = ft_split(av[2], ' ');
+		if (!cmd_args)
+		{
+			free(cmd_path);
+			ft_error(MEMORY_ERROR);
+		}
+		execve(cmd_path, cmd_args, envp);
+		ft_free_split(cmd_args);
+		free(cmd_path);
+		ft_error(EXECVE_ERROR);
+	}
+	if (pid > 0)
+	{
+		wait(NULL);
+		close(fd[1]);
+		dup2(fd[0], STDIN_FILENO);
+		dup2(outfile, STDOUT_FILENO);
+		close(fd[0]);
+		close(outfile);
+		close(infile);
+		cmd_path = find_command_path(av[3], envp);
+		if (!cmd_path)
+			ft_error(COMMAND_NOT_FOUND);
+		cmd_args = ft_split(av[3], ' ');
+		if (!cmd_args)
+		{
+			free(cmd_path);
+			ft_error(MEMORY_ERROR);
+		}
+		execve(cmd_path, cmd_args, envp);
+		ft_free_split(cmd_args);
+		free(cmd_path);
+		ft_error(EXECVE_ERROR);
+	}
+	return (0);
+}

@@ -15,6 +15,9 @@
 
 # define ARGS_ERROR "There must be 4 arguments"
 # define OPEN_ERROR "Error opening file"
+# define PIPE_ERROR "Error making pipe"
+# define FORK_ERROR "Error making fork"
+# define EXECVE_ERROR "Error making execve"
 # define INT_MIN -2147483648
 # define INT_MAX 2147483647
 

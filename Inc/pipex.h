@@ -15,6 +15,9 @@
 
 # include <stdio.h> //Para pruebas, borrar si es necesario
 # include <fcntl.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <sys/wait.h>
 # include "utils/errors.h"
 
 #endif
