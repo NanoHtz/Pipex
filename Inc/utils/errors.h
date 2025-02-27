@@ -14,10 +14,13 @@
 # define ERRORS_H
 
 # define ARGS_ERROR "There must be 4 arguments"
-# define OPEN_ERROR "Error opening file"
+# define OPEN_ERROR_OUTFILE "Error opening outfile"
+# define OPEN_ERROR_INFILE "Error opening infile"
 # define PIPE_ERROR "Error making pipe"
 # define FORK_ERROR "Error making fork"
 # define EXECVE_ERROR "Error making execve"
+# define COMMAND_NOT_FOUND "Command not found"
+# define MEMORY_ERROR "Error making memory"
 # define INT_MIN -2147483648
 # define INT_MAX 2147483647
 

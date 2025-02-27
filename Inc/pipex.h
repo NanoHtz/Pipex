@@ -19,5 +19,13 @@
 # include <stdlib.h>
 # include <sys/wait.h>
 # include "utils/errors.h"
+# include "libft/libft.h"
+
+void	execute_command(char *cmd, char **envp);
+void	parent_process(int fd[], char **envp, char **av);
+void	child_process(int fd[], char **envp, char **av);
+char	*is_executable(char *cmd_path, char **paths);
+char	**get_paths(char **envp);
+char	*find_command_path(char *cmd, char **envp);
 
 #endif

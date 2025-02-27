@@ -26,7 +26,7 @@ DIR_PIPEX = Inc/
 DIR_UTILS  = Inc/utils/
 DIR_LIBFT  = Inc/libft/
 
-HEADERS = $(wildcard $(DIR_PIPEX)*.h) $(wildcard $(DIR_UTILS)*.h)
+HEADERS = $(wildcard $(DIR_LIBFT)*.h) $(wildcard $(DIR_UTILS)*.h) $(wildcard $(DIR_PIPEX)*.h)
 
 SOURCES      = $(wildcard $(DIR_SRC)*.c)
 SOURCES_UTILS = $(wildcard $(DIR_UTILS)*.c)
@@ -57,19 +57,19 @@ $(NAME): $(OBJS)
 	@echo "${CYAN}=================================================${RESET}"
 	@echo "${GREEN}  [✔] $(NAME) compilado con éxito. ${RESET}"
 	@echo "${CYAN}=================================================${RESET}"
-	@echo "${MAGENTA}Puedes usar: valgrind --leak-check=full -s ./$(NAME) argv[1] argv[2] ...${RESET}"
+	@echo "${MAGENTA}Puedes usar: valgrind --leak-check=full -s ./$(NAME) infile "cmd1" "cmd2" outfile${RESET}"
 
 # ========================= REGLAS PARA COMPILAR OBJETOS ===================== #
+
+$(OBJSDIR)%.o: $(DIR_LIBFT)%.c | $(OBJSDIR)
+	@echo "${CYAN}Compilando objeto: $<${RESET}"
+	$(CC) $(CFLAGS) -I$(DIR_PIPEX) -c $< -o $@
 
 $(OBJSDIR)%.o: $(DIR_SRC)%.c | $(OBJSDIR)
 	@echo "${CYAN}Compilando objeto: $<${RESET}"
 	$(CC) $(CFLAGS) -I$(DIR_PIPEX) -c $< -o $@
 
 $(OBJSDIR)%.o: $(DIR_UTILS)%.c | $(OBJSDIR)
-	@echo "${CYAN}Compilando objeto: $<${RESET}"
-	$(CC) $(CFLAGS) -I$(DIR_PIPEX) -c $< -o $@
-
-$(OBJSDIR)%.o: $(DIR_LIBFT)%.c | $(OBJSDIR)
 	@echo "${CYAN}Compilando objeto: $<${RESET}"
 	$(CC) $(CFLAGS) -I$(DIR_PIPEX) -c $< -o $@
 
