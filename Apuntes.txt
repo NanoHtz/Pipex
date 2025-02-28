@@ -22,3 +22,11 @@ envp -> es una array de strings del sistema, donde todas tienen la forma "VARIAB
 -> Dentro buscamos la variable "PATH=" que nos dara las posibles rutas del comando
 -> en find path, buscamos en los directorios las rutas adecuadas, aquellas que comienzan con path
 -> despues dividimos todas las rutas que aparecen entre : con el split en un nuevo array
+
+Explicacion del codigo:
+
+Main:
+
+Primero comprueba que los argumentos sean exactamente 5, si no, devuelve un mensaje de error diciendolo.
+Despues abre el archivo infile, que nosotros no creamos, si no que lo da el evaluador.
+En caso de fallo, devuelve un mensaje de error

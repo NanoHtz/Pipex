@@ -42,25 +42,28 @@ char	**get_paths(char **envp)
 char	*find_command_path(char *cmd, char **envp)
 {
 	char	**paths;
-	char	*cmd_path;
-	char	*temp;
+	char	*path;
 	int		i;
+	char	*part_path;
 
-	paths = get_paths(envp);
+	i = 0;
+	while (ft_strnstr(envp[i], "PATH", 4) == 0)
+		i++;
+	paths = ft_split(envp[i] + 5, ':');
 	i = 0;
 	while (paths[i])
 	{
-		temp = ft_strjoin(paths[i], "/");
-		if (!temp)
-			return (ft_free_split(paths), NULL);
-		cmd_path = ft_strjoin(temp, cmd);
-		free(temp);
-		if (!cmd_path)
-			return (ft_free_split(paths), NULL);
-		if (is_executable(cmd_path, paths))
-			return (cmd_path);
+		part_path = ft_strjoin(paths[i], "/");
+		path = ft_strjoin(part_path, cmd);
+		free(part_path);
+		if (access(path, F_OK) == 0)
+			return (path);
+		free(path);
 		i++;
 	}
-	ft_free_split(paths);
-	return (NULL);
+	i = -1;
+	while (paths[++i])
+		free(paths[i]);
+	free(paths);
+	return (0);
 }

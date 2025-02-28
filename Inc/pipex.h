@@ -21,6 +21,13 @@
 # include "utils/errors.h"
 # include "libft/libft.h"
 
+typedef struct files
+{
+	int infile;
+	int outfile;
+}				t_files;
+
+
 void	execute_command(char *cmd, char **envp);
 void	parent_process(int fd[], char **envp, char **av);
 void	child_process(int fd[], char **envp, char **av);

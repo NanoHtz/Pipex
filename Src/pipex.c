@@ -12,25 +12,43 @@
 
 #include "../Inc/pipex.h"
 
-void	execute_command(char *cmd, char **envp)
+t_files	ft_open(int fd[], char **av)
 {
-	char	*cmd_path;
-	char	**cmd_args;
+	t_files files;
 
-	cmd_path = find_command_path(cmd, envp);
-	if (!cmd_path)
-		ft_error(COMMAND_NOT_FOUND);
-	cmd_args = ft_split(cmd, ' ');
-	if (!cmd_args)
+	files->infile = open(av[1], O_RDONLY, 0777);
+	if (files->infile == -1)
 	{
-		free(cmd_path);
-		ft_error(MEMORY_ERROR);
+		ft_error(OPEN_ERROR_INFILE);
+		exit(EXIT_FAILURE);
 	}
-	execve(cmd_path, cmd_args, envp);
-	ft_free_split(cmd_args);
-	free(cmd_path);
-	ft_error(EXECVE_ERROR);
-	execute_command(cmd, envp);
+	files->outfile = open(av[4], O_WRONLY | O_CREAT | O_TRUNC, 0777);
+	if (files->outfile == -1)
+	{
+		ft_error(OPEN_ERROR_OUTFILE);
+		exit(EXIT_FAILURE);
+	}
+	return files
+}
+
+void	execute_command(char *av, char **envp)
+{
+	char	**cmd;
+	int		i;
+	char	*path;
+
+	i = -1;
+	cmd = ft_split(av, ' ');
+	path = find_command_path(cmd[0], envp);
+	if (!path)
+	{
+		while (cmd[++i])
+			free(cmd[i]);
+		free(cmd);
+		ft_error("error");
+	}
+	if (execve(path, cmd, envp) == -1)
+		ft_error("error");
 }
 
 void	parent_process(int fd[], char **envp, char **av)
@@ -67,20 +85,25 @@ void	child_process(int fd[], char **envp, char **av)
 
 int	main(int ac, char **av, char **envp)
 {
-	int		fd[2];
 	pid_t	pid;
+	int		fd[2];
+	t_files	files;
 
 	if (ac == 5)
 	{
+		files = ft_open(fd, av);
 		if (pipe(fd) == -1)
 			ft_error(PIPE_ERROR);
 		pid = fork();
 		if (pid == -1)
 			ft_error(FORK_ERROR);
-		if (pid == 0)
+		else if (pid == 0)
 			child_process(fd, envp, av);
-		wait(NULL);
-		parent_process(fd, envp, av);
+		else
+		{
+			waitpid(pid, NULL, 0);
+			parent_process(fd, envp, av);
+		}
 	}
 	else
 		ft_error(ARGS_ERROR);
