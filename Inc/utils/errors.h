@@ -21,10 +21,13 @@
 # define EXECVE_ERROR "Error making execve"
 # define COMMAND_NOT_FOUND "Command not found"
 # define MEMORY_ERROR "Error making memory"
+# define MALLOC_ERROR "Error making malloc"
+# define COMMAND_ERROR "Error: Command not found"
 # define INT_MIN -2147483648
 # define INT_MAX 2147483647
 
 # include <unistd.h>
+# include <stdlib.h>
 
 //Basic
 void	ft_strendl(const char *str);

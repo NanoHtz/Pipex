@@ -23,14 +23,14 @@
 
 typedef struct files
 {
-	int infile;
-	int outfile;
+	int	infile;
+	int	outfile;
 }				t_files;
 
-
+t_files	*ft_open(char **av);
 void	execute_command(char *cmd, char **envp);
-void	parent_process(int fd[], char **envp, char **av);
-void	child_process(int fd[], char **envp, char **av);
+void	parent_process(int fd[], char **envp, char **av, t_files *files);
+void	child_process(int fd[], char **envp, char **av, t_files *files);
 char	*is_executable(char *cmd_path, char **paths);
 char	**get_paths(char **envp);
 char	*find_command_path(char *cmd, char **envp);

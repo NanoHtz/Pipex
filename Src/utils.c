@@ -12,17 +12,6 @@
 
 #include "../Inc/pipex.h"
 
-char	*is_executable(char *cmd_path, char **paths)
-{
-	if (access(cmd_path, X_OK) == 0)
-	{
-		ft_free_split(paths);
-		return (cmd_path);
-	}
-	free(cmd_path);
-	return (NULL);
-}
-
 char	**get_paths(char **envp)
 {
 	char	*path;

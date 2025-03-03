@@ -17,7 +17,7 @@ int	ft_error(const char *str)
 	write(1, "\033[31m", 5);
 	ft_strendl(str);
 	write(1, "\033[0m", 4);
-	return (-1);
+	exit(EXIT_FAILURE);
 }
 
 int	*ft_ptr_error(const char *str)

@@ -57,7 +57,7 @@ $(NAME): $(OBJS)
 	@echo "${CYAN}=================================================${RESET}"
 	@echo "${GREEN}  [✔] $(NAME) compilado con éxito. ${RESET}"
 	@echo "${CYAN}=================================================${RESET}"
-	@echo "${MAGENTA}Puedes usar: valgrind --leak-check=full -s ./$(NAME) infile "cmd1" "cmd2" outfile${RESET}"
+	@echo "${MAGENTA}Puedes usar: valgrind --trace-children=yes --leak-check=full -s ./$(NAME) infile "cmd1" "cmd2" outfile${RESET}"
 
 # ========================= REGLAS PARA COMPILAR OBJETOS ===================== #
 

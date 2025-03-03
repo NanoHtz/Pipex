@@ -28,5 +28,18 @@ Explicacion del codigo:
 Main:
 
 Primero comprueba que los argumentos sean exactamente 5, si no, devuelve un mensaje de error diciendolo.
-Despues abre el archivo infile, que nosotros no creamos, si no que lo da el evaluador.
-En caso de fallo, devuelve un mensaje de error
+Despues Ejecuta la funcion ft_open, donde se reserva memoria para la estructura de archivos y se abren ambos.
+Luego crea el pipe, una relacion unidireccional entre procesos, en este caso entre nuestros dos descriptores de archivo fd
+fd[0] lee datos y fd[1] los escribe, al hacer "cat" "wc -l", cat, el proceso hijo escribe en el fd y wc lee
+Con fork, creamos un proceso hijo, una copia exacta del proceso padre que se ejecuta en paralelo, sin embargo , nosotros añadiremps el wait para asegurarnos
+de que el descriptor de archivo donde se lee, tiene algo que leer
+Despues simplemente sabemos que si pid == 0 estamos ante el proceso hijo, si no estamos ante el proceso padre, a partir de ahi se ejecutan
+los distintos codigos para los procesos.
+En estos procesos tenemos la redireccion de las salidas y las entradas, y cierra los fd que no se usan en los procesos.
+despues ejecuta el comando, y es quizas lo mas importante
+envp, es un doble puntero que almacena la ruta de las variables de entorno
+y lo importante dentro de envp es "PATH" palabra clave, puesto que es esas rutas se almacenan los ejecutables
+Ese es el primer bucle, cuando llega a los path, para i le hace un split, con : como separador y saltandose las 5 primeras letras las de path
+despues con join, construimos la posible ruta, añadiendo / y el comando
+Comprueba que el archivo exista con acces, si existe, devuelve la rita completa.
+despues libera todos los arrays

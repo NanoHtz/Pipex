@@ -12,73 +12,56 @@
 
 #include "../Inc/pipex.h"
 
-t_files	ft_open(int fd[], char **av)
+t_files	*ft_open(char **av)
 {
-	t_files files;
+	t_files	*files;
 
+	files = (t_files *)malloc(sizeof(t_files));
+	if (!files)
+		ft_error(MALLOC_ERROR);
 	files->infile = open(av[1], O_RDONLY, 0777);
 	if (files->infile == -1)
 	{
+		free(files);
 		ft_error(OPEN_ERROR_INFILE);
-		exit(EXIT_FAILURE);
 	}
 	files->outfile = open(av[4], O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	if (files->outfile == -1)
 	{
+		free(files);
 		ft_error(OPEN_ERROR_OUTFILE);
-		exit(EXIT_FAILURE);
 	}
-	return files
+	return (files);
 }
 
 void	execute_command(char *av, char **envp)
 {
 	char	**cmd;
-	int		i;
 	char	*path;
 
-	i = -1;
 	cmd = ft_split(av, ' ');
 	path = find_command_path(cmd[0], envp);
-	if (!path)
-	{
-		while (cmd[++i])
-			free(cmd[i]);
-		free(cmd);
-		ft_error("error");
-	}
 	if (execve(path, cmd, envp) == -1)
-		ft_error("error");
+	{
+		ft_putstr_fd("Error: command not found: ", 2);
+		ft_putendl_fd(cmd[0], 2);
+		ft_free_split(cmd);
+		ft_error(COMMAND_ERROR);
+	}
 }
 
-void	parent_process(int fd[], char **envp, char **av)
+void	parent_process(int fd[], char **envp, char **av, t_files *files)
 {
-	int		outfile;
-
-	outfile = open(av[4], O_WRONLY | O_CREAT | O_TRUNC, 0777);
-	if (outfile == -1)
-	{
-		ft_error(OPEN_ERROR_OUTFILE);
-		exit(EXIT_FAILURE);
-	}
 	dup2(fd[0], STDIN_FILENO);
-	dup2(outfile, STDOUT_FILENO);
+	dup2(files->outfile, STDOUT_FILENO);
 	close(fd[1]);
 	execute_command(av[3], envp);
 }
 
-void	child_process(int fd[], char **envp, char **av)
+void	child_process(int fd[], char **envp, char **av, t_files *files)
 {
-	int		infile;
-
-	infile = open(av[1], O_RDONLY, 0777);
-	if (infile == -1)
-	{
-		ft_error(OPEN_ERROR_INFILE);
-		exit(EXIT_FAILURE);
-	}
 	dup2(fd[1], STDOUT_FILENO);
-	dup2(infile, STDIN_FILENO);
+	dup2(files->infile, STDIN_FILENO);
 	close(fd[0]);
 	execute_command(av[2], envp);
 }
@@ -87,22 +70,22 @@ int	main(int ac, char **av, char **envp)
 {
 	pid_t	pid;
 	int		fd[2];
-	t_files	files;
+	t_files	*files;
 
 	if (ac == 5)
 	{
-		files = ft_open(fd, av);
+		files = ft_open(av);
 		if (pipe(fd) == -1)
 			ft_error(PIPE_ERROR);
 		pid = fork();
-		if (pid == -1)
+		if (pid < 0)
 			ft_error(FORK_ERROR);
 		else if (pid == 0)
-			child_process(fd, envp, av);
+			child_process(fd, envp, av, files);
 		else
 		{
 			waitpid(pid, NULL, 0);
-			parent_process(fd, envp, av);
+			parent_process(fd, envp, av, files);
 		}
 	}
 	else
