@@ -21,18 +21,21 @@
 # include "utils/errors.h"
 # include "libft/libft.h"
 
-typedef struct files
+typedef struct s_pipex
 {
-	int	infile;
-	int	outfile;
-}				t_files;
+	pid_t	pid[2];
+	int		fd[2];
+	char	**av;
+}	t_pipex;
 
-t_files	*ft_open(char **av);
-void	execute_command(char *cmd, char **envp);
-void	parent_process(int fd[], char **envp, char **av, t_files *files);
-void	child_process(int fd[], char **envp, char **av, t_files *files);
-char	*is_executable(char *cmd_path, char **paths);
-char	**get_paths(char **envp);
-char	*find_command_path(char *cmd, char **envp);
+void	create_pipe(t_pipex *pipex);
+void	fork_process(t_pipex *pipex, char **av, char **envp);
+void	child_process(t_pipex *pipex, char **av, char **envp);
+void	parent_process(t_pipex *pipex, char **av, char **envp);
+void	execute(char *cmd, t_pipex *pipex, char **envp);
+char	**get_path(char **envp);
+char	*search_correct_path(char *cmd, char **path);
+void	free_array(char	**array);
+void	free_and_exit(t_pipex *pipex, char **args, int code);
 
 #endif

@@ -12,47 +12,46 @@
 
 #include "../Inc/pipex.h"
 
-char	**get_paths(char **envp)
+void	free_and_exit(t_pipex *pipex, char **args, int code)
 {
-	char	*path;
-	char	**paths;
-
-	while (*envp && ft_strncmp(*envp, "PATH=", 5) != 0)
-		envp++;
-	if (!*envp)
-		return (NULL);
-	path = *envp + 5;
-	paths = ft_split(path, ':');
-	if (!paths)
-		return (NULL);
-	return (paths);
+	free(pipex);
+	free_array(args);
+	exit(code);
 }
 
-char	*find_command_path(char *cmd, char **envp)
+void	free_array(char	**array)
 {
-	char	**paths;
-	char	*path;
-	int		i;
-	char	*part_path;
+	int	i;
 
 	i = 0;
-	while (ft_strnstr(envp[i], "PATH", 4) == 0)
-		i++;
-	paths = ft_split(envp[i] + 5, ':');
-	i = 0;
-	while (paths[i])
+	while (array[i])
 	{
-		part_path = ft_strjoin(paths[i], "/");
-		path = ft_strjoin(part_path, cmd);
-		free(part_path);
-		if (access(path, F_OK) == 0)
-			return (path);
-		free(path);
+		free(array[i]);
 		i++;
 	}
-	i = -1;
-	while (paths[++i])
-		free(paths[i]);
-	free(paths);
-	return (0);
+	free(array);
+}
+
+void	execute(char *cmd, t_pipex *pipex, char **envp)
+{
+	char	**args;
+	char	**path;
+	char	*tmp;
+
+	args = ft_split(cmd, ' ');
+	if (!args[0])
+		free_and_exit(pipex, args, 1);
+	path = get_path(envp);
+	tmp = NULL;
+	tmp = search_correct_path(args[0], path);
+	if (!tmp)
+	{
+		free_array(path);
+		free_and_exit(pipex, args, 127);
+	}
+	execve(tmp, args, envp);
+	free(tmp);
+	free_array(args);
+	free_array(path);
+	exit(127);
 }

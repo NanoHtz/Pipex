@@ -31,15 +31,9 @@
 
 //Basic
 void	ft_strendl(const char *str);
+size_t	ft_strlen(const char *s);
 //Errors
 int		ft_error(const char *str);
-void	ft_void_error(const char *str);
-int		*ft_ptr_error(const char *str);
-int		ft_max_error(const char *str);
-int		ft_min_error(const char *str);
-//Warnings
-void	ft_warning(const char *str);
-//Sucess
-void	ft_success(const char *str);
+int		ft_error_command(const char *str);
 
 #endif

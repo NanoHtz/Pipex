@@ -14,23 +14,18 @@
 
 int	ft_error(const char *str)
 {
-	write(1, "\033[31m", 5);
-	ft_strendl(str);
-	write(1, "\033[0m", 4);
-	exit(EXIT_FAILURE);
+	write(2, "\033[31m", 5);
+	write(2, str, ft_strlen(str));
+	write(2, "\n", 1);
+	write(2, "\033[0m", 4);
+	exit(1);
 }
 
-int	*ft_ptr_error(const char *str)
+int	ft_error_command(const char *str)
 {
-	write(1, "\033[31m", 5);
-	ft_strendl(str);
-	write(1, "\033[0m", 4);
-	return (NULL);
-}
-
-void	ft_void_error(const char *str)
-{
-	write(1, "\033[31m", 5);
-	ft_strendl(str);
-	write(1, "\033[0m", 4);
+	write(2, "\033[31m", 5);
+	write(2, str, ft_strlen(str));
+	write(2, "\n", 1);
+	write(2, "\033[0m", 4);
+	exit(127);
 }
