@@ -1,63 +1,87 @@
-<!-- assets/banner.svg | pipex (rehecho y ajustado al viewBox) -->
-<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="360" viewBox="0 0 1280 360" role="img" aria-labelledby="t d">
-  <title id="t">pipex — Pipes &amp; redirections in C (dup2, execve, heredoc)</title>
-  <desc id="d">Banner oscuro con diagrama cmd1 | cmd2 &gt; outfile y variantes; todo dentro del lienzo.</desc>
+<!-- ===================== BANNER ===================== -->
+<p align="center">
+  <img src="assets/banner.svg" alt="Banner de TODO_TITULO" width="100%" />
+</p>
 
-  <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#1a1b27"/><stop offset="100%" stop-color="#15161e"/>
-    </linearGradient>
-    <style>
-      .title{font:700 56px/1.1 Inter,Segoe UI,Roboto,Arial,sans-serif;fill:#70a5fd}
-      .tag{font:500 20px/1.4 Inter,Segoe UI,Roboto,Arial,sans-serif;fill:#c0caf5}
-      .mono{font:600 16px/1.35 "JetBrains Mono","Fira Code",Menlo,Consolas,monospace;fill:#c0caf5}
-      .tube{fill:none;stroke:#7aa2f7;stroke-width:8;stroke-linecap:round;opacity:.9}
-    </style>
-    <marker id="arr" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto">
-      <path d="M0,0 L7,3 L0,6 z" fill="#f7768e"/>
-    </marker>
-  </defs>
+<!-- ===================== BADGES (ajusta/borra los que no apliquen) ===================== -->
+<p align="center">
+  <img src="https://img.shields.io/github/stars/NanoHtz/TODO_REPO?style=social" alt="Stars">
+  <img src="https://img.shields.io/github/last-commit/NanoHtz/TODO_REPO?label=last%20commit&color=7aa2f7&labelColor=1a1b27" alt="Last commit">
+  <img src="https://img.shields.io/github/languages/top/NanoHtz/TODO_REPO?color=70a5fd&label=language&labelColor=1a1b27" alt="Top language">
+  <!-- CI opcional (si tienes workflow .github/workflows/build.yml):
+  <img src="https://img.shields.io/github/actions/workflow/status/NanoHtz/TODO_REPO/build.yml?label=CI&logo=githubactions&logoColor=white&labelColor=1a1b27">
+  -->
+  <img src="https://img.shields.io/github/license/NanoHtz/TODO_REPO?color=bb9af7&labelColor=1a1b27" alt="License">
+  <!-- PRs welcome:
+  <img src="https://img.shields.io/badge/PRs-welcome-70a5fd?labelColor=1a1b27">
+  -->
+</p>
 
-  <!-- fondo -->
-  <rect width="1280" height="360" fill="url(#bg)"/>
+<h1 align="center">TODO_TITULO</h1>
+<p align="center"><i>TODO_TAGLINE — una línea que diga qué hace el proyecto y por qué importa.</i></p>
 
-  <!-- texto -->
-  <g transform="translate(64,112)">
-    <text class="title">pipex</text>
-    <text class="tag" y="48">Pipes · Redirections · Heredoc · PATH resolution</text>
-    <text class="tag" y="78">C · dup2/execve · error handling</text>
-  </g>
+---
 
-  <!-- composición derecha (máx. 520 px de ancho) -->
-  <g transform="translate(720,60)">
-    <!-- cajas de comandos (150px ancho, 40px separación) -->
-    <g>
-      <rect x="0"   y="40" width="150" height="60" rx="10" fill="#0b1020" stroke="#70a5fd" stroke-opacity=".6"/>
-      <rect x="190" y="40" width="150" height="60" rx="10" fill="#0b1020" stroke="#70a5fd" stroke-opacity=".6"/>
-      <rect x="380" y="40" width="150" height="60" rx="10" fill="#0b1020" stroke="#70a5fd" stroke-opacity=".6"/>
-      <text class="mono" x="16"  y="78">cmd1</text>
-      <text class="mono" x="206" y="78">cmd2</text>
-      <text class="mono" x="396" y="78">outfile</text>
-    </g>
+## Índice
+- [Resumen](#resumen)
+- [Capturas / Demo](#capturas--demo)
+- [Stack / Dependencias](#stack--dependencias)
+- [Estructura](#estructura)
+- [Instalación y uso](#instalación-y-uso)
+- [Tests](#tests)
+- [Rendimiento / Complejidad](#rendimiento--complejidad)
+- [Roadmap](#roadmap)
+- [Problemas conocidos](#problemas-conocidos)
+- [Contribuir](#contribuir)
+- [Licencia](#licencia)
+- [Autor](#autor)
 
-    <!-- tuberías -->
-    <path d="M150,70 C165,70 175,70 190,70" class="tube"/>
-    <path d="M340,70 C355,70 365,70 380,70" class="tube"/>
+---
 
-    <!-- flechas -->
-    <line x1="150" y1="70" x2="188" y2="70" stroke="#f7768e" stroke-width="2.5" marker-end="url(#arr)"/>
-    <line x1="340" y1="70" x2="378" y2="70" stroke="#f7768e" stroke-width="2.5" marker-end="url(#arr)"/>
+## Resumen
+- **Qué**: TODO_descripción_corta (1–2 frases).
+- **Para qué**: valor que aporta (p. ej., “aprendizaje de X”, “utilidad Y”).
+- **Estado**: `alpha` / `estable` / `en progreso`.
+- **Highlights**: 3 bullets de funciones o decisiones técnicas clave.
 
-    <!-- línea de comando normal -->
-    <g transform="translate(0,150)">
-      <rect x="0" y="0" width="530" height="50" rx="10" fill="#0b1020" stroke="#bb9af7" stroke-opacity=".5"/>
-      <text class="mono" x="12" y="32">./pipex infile "cmd1" "cmd2" outfile</text>
-    </g>
+---
 
-    <!-- variante heredoc -->
-    <g transform="translate(0,210)">
-      <rect x="0" y="0" width="530" height="50" rx="10" fill="#0b1020" stroke="#7aa2f7" stroke-opacity=".5"/>
-      <text class="mono" x="12" y="32">./pipex here_doc LIMITER "cmd1" "cmd2" outfile</text>
-    </g>
-  </g>
-</svg>
+## Capturas / Demo
+<!-- Deja una o varias imágenes / GIFs; guarda en assets/ -->
+<p align="center">
+  <!-- <img src="assets/demo_1.png" width="85%" alt="Demo"> -->
+  <!-- <img src="assets/demo.gif" width="85%" alt="Animación"> -->
+  <i>Incluye aquí una imagen o GIF corto si aporta valor.</i>
+</p>
+
+---
+
+## Stack / Dependencias
+<!-- Elige la variante que aplique y elimina la otra -->
+
+<!-- ===== Variante C / 42 ===== -->
+- **Lenguaje**: C (C99/gnu11)
+- **Build**: Makefile (`cc -Wall -Wextra -Werror`)
+- **POSIX**: `unistd.h`, `fcntl.h`, `signal.h`, etc.
+- **Opcional**: MiniLibX / pthreads / readline
+
+<!-- ===== Variante Python / Datos ===== -->
+<!--
+- **Lenguaje**: Python 3.10+
+- **Entorno**: venv / conda
+- **Paquetes**: numpy, pandas, matplotlib, scipy, scikit-learn, jupyter
+-->
+
+---
+
+## Estructura
+```text
+TODO_REPO/
+├─ src/              # código fuente
+├─ include/          # headers (si C)
+├─ notebooks/        # *.ipynb (si Python)
+├─ tests/            # mains de prueba o pytest
+├─ assets/           # banner.svg, capturas
+├─ Makefile          # si C/42
+├─ requirements.txt  # si Python
+└─ README.md
