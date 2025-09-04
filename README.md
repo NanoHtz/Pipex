@@ -1,8 +1,7 @@
 <!-- ===================== BANNER ===================== -->
 <p align="center">
-  <img src="assets/banner.svg" alt="Banner de TODO_TITULO" width="100%" />
+  <img src="https://raw.githubusercontent.com/NanoHtz/Assets/main/pipex/banner.svg" alt="Philosophers banner">
 </p>
-
 <!-- ===================== BADGES (ajusta/borra los que no apliquen) ===================== -->
 <p align="center">
   <img src="https://img.shields.io/github/stars/NanoHtz/TODO_REPO?style=social" alt="Stars">
