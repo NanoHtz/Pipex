@@ -68,6 +68,8 @@ Equivalente a: `< infile cmd1 | cmd2 > outfile`
 5) **Padre**  
    - Cierra **todos** los FDs (`infile`, `outfile`, `p[0]`, `p[1]`)  
    - `waitpid` a los hijos y propaga un código de salida coherente (p. ej. el del último comando)
+   - 
+</details>
 
 <a id="compilacion"></a>
 ## 🛠️ Compilación
