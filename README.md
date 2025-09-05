@@ -32,8 +32,6 @@ Se realiza la **resolución de rutas** con `PATH`, la **creación de procesos** 
 - **Redirecciones**: `dup2` para reenviar `STDIN`/`STDOUT`.
 - **Ejecución de programas**: `execve`, construcción de `argv`/`envp`.
 - **Resolución de comandos**: lectura de `PATH`, prueba de ejecutables (`access(X_OK)`).
-- **Manejo de errores**: `perror`, códigos de salida, permisos/archivos inexistentes.
-- **Diseño escalable**: generalizar de 2 comandos → N comandos (`bonus`) y `here_doc`.
 
 ---
 
