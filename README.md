@@ -81,7 +81,6 @@ git clone https://github.com/NanoHtz/Pipex.git
 🏗️ Makefile
 ```bash
 make          # produce ./pipex  (mandatory)
-make bonus    # produce ./pipex_bonus (N comandos + here_doc)
 make clean    # borra objetos
 make fclean   # borra objetos y binarios
 make re       # limpia y recompila
