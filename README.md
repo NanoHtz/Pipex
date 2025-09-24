@@ -94,9 +94,10 @@ make clean    # borra objetos
 make fclean   # borra objetos y binarios
 make re       # limpia y recompila
 ```
-🏗️ Makefile
+🏗️ Pruebas
 <br>
  recomiendo el uso del siguiente tester: 
+ </br>
  ```bash
  https://github.com/michmos/42_pipex_tester
 ```
