@@ -47,7 +47,6 @@ Se realiza la **resolución de rutas** con `PATH`, la **creación de procesos** 
 ---
 
 <a id="explicacion"></a>
-<details>
   <summary><h3>📝 Explicación</h3></summary>
 
 ### 🔌 Tuberías y duplicación de FDs
@@ -80,7 +79,6 @@ Equivalente a: `< infile cmd1 | cmd2 > outfile`
    - Cierra **todos** los FDs (`infile`, `outfile`, `p[0]`, `p[1]`)
    - `waitpid` a los hijos y propaga un código de salida coherente (p. ej. el del último comando)
    -
-</details>
 
 <a id="compilacion"></a>
 ## 🛠️ Compilación
@@ -96,4 +94,9 @@ make clean    # borra objetos
 make fclean   # borra objetos y binarios
 make re       # limpia y recompila
 ```
-
+🏗️ Makefile
+<br>
+ recomiendo el uso del siguiente tester: 
+ ```bash
+ https://github.com/michmos/42_pipex_tester
+```
