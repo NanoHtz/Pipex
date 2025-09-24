@@ -4,7 +4,10 @@
 </p>
 
 <p align="center"><i>🧵 Pipex — Replica del pipeline de shell <code>&lt; infile cmd1 | cmd2 &gt; outfile</code> usando <b>pipe</b>/<b>fork</b>/<b>dup2</b>/<b>execve</b>.
----
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/NanoHtz/Assets/main/100.png" alt="pipex nota" height="120">
+</p>
 
 ## Índice
 - [Resumen](#resumen)
@@ -21,6 +24,16 @@
 ./pipex infile "cmd1" "cmd2" outfile
 ```
 Se realiza la **resolución de rutas** con `PATH`, la **creación de procesos** con `fork`, la **conexión** entre procesos con `pipe`, el **redireccionamiento** con `dup2` y la **ejecución** con `execve`, controlando errores y cerrando correctamente los descriptores.
+
+> Este proyecto sigue la **Norma oficial de 42** para estilo en C (Norminette).
+> En todos los proyectos de 42, el uso de la gran mayoria de bibliotecas esta prohibido, siendo nuestro propio desarrollo libft el sustituto de las funciones básicas. 
+> - Código legible.  
+> - Funciones pequeñas (<25 líneas),
+> - 4 parámetros por función,
+> - Nombres claros en `snake_case` y en inglés.
+> - 1 responsabilidad por función.
+>  - Variables declaradas al inicio del bloque(maximo 4 por función). 
+
 <a id="para-que"></a>
 ## 🧩 ¿Para qué?
 
